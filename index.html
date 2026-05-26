@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DIGI-church</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: monospace;
+  background: radial-gradient(circle at top, #120018, #000);
+  color: #00ffee;
+}
+
+/* LAYOUT */
+.wrapper {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+/* SIDEBAR (Neocities style) */
+.sidebar {
+  border-right: 1px solid #00ffee;
+  padding: 15px;
+  background: rgba(0,0,0,0.8);
+}
+
+.sidebar h1 {
+  font-size: 28px;
+  text-shadow: 0 0 10px #97a79f;
+}
+
+.navbtn {
+  display: block;
+  margin: 8px 0;
+  padding: 6px;
+  border: 1px solid #899c9b;
+  background: black;
+  color: #00ffee;
+  cursor: pointer;
+}
+
+.navbtn:hover {
+  box-shadow: 0 0 10px #ff00ff;
+}
+
+/* MAIN AREA */
+.main {
+  padding: 20px;
+}
+
+/* PANELS */
+.panel {
+  border: 1px solid #301f6d;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px #00ffee22;
+}
+
+/* GRID BLOCKS */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.box {
+  border: 1px solid #00ffee;
+  padding: 10px;
+  background: rgba(0,0,0,0.7);
+  cursor: pointer;
+}
+
+.box:hover {
+  box-shadow: 0 0 20px #ff00ff55;
+  transform: scale(1.02);
+}
+
+/* CIRCLES */
+.circle {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LOG STYLE */
+.log {
+  height: 180px;
+  overflow-y: auto;
+  border: 1px solid #ff00ff;
+  padding: 10px;
+  background: black;
+}
+
+.msg {
+  color: #ff66ff;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h1>DIGI-church</h1>
+
+    <button class="navbtn" onclick="show('home')">HOME</button>
+    <button class="navbtn" onclick="show('log')">SYSTEM LOG</button>
+    <button class="navbtn" onclick="show('guest')">GUEST BOOK</button>
+    <button class="navbtn" onclick="show('map')">MAP</button>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HOME -->
+    <div id="home" class="page">
+      <div class="panel">
+        <h2>WELCOME NODE</h2>
+        <p>you are inside the DIGI-church network</p>
+      </div>
+    </div>
+
+    <!-- LOG -->
+    <div id="log" class="page" style="display:none">
+      <div class="panel">
+        <h2>SYSTEM LOG</h2>
+        <div class="log" id="systemLog"></div>
+        <button onclick="addLog()">generate signal</button>
+      </div>
+    </div>
+
+    <!-- GUEST -->
+    <div id="guest" class="page" style="display:none">
+      <div class="panel">
+        <h2>GUEST BOOK</h2>
+        <div class="log" id="guestLog"></div>
+        <input id="guestInput" placeholder="leave message...">
+        <button onclick="addGuest()">send</button>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div id="map" class="page" style="display:none">
+      <div class="panel">
+        <h2>NODE MAP</h2>
+
+        <div class="grid">
+
+          <div class="box" onclick="alert('VOID')">VOID</div>
+          <div class="box circle" onclick="alert('A')">A</div>
+          <div class="box" onclick="alert('ARCHIVE')">ARCHIVE</div>
+
+          <div class="box circle" onclick="alert('B')">B</div>
+          <div class="box" onclick="alert('TOWER')">TOWER</div>
+          <div class="box circle" onclick="alert('C')">C</div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+// NAV
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = "none");
+  document.getElementById(page).style.display = "block";
+}
+
+// LOG
+const logs = ["signal detected","node active","glitch present","unknown user"];
+
+function addLog() {
+  const log = document.getElementById("systemLog");
+  const div = document.createElement("div");
+  div.className = "msg";
+  div.innerText = "> " + logs[Math.floor(Math.random()*logs.length)];
+  log.appendChild(div);
+}
+
+// GUEST (LOCAL for now)
+function addGuest() {
+  const input = document.getElementById("guestInput");
+  if (!input.value) return;
+
+  const log = document.getElementById("guestLog");
+  const div = document.createElement("div");
+  div.className = "msg";
+  div.innerText = "guest: " + input.value;
+
+  log.appendChild(div);
+  input.value = "";
+}
+
+</script>
+
+</body>
+</html>
